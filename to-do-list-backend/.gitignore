@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Diretórios de build
+/dist/
+/build/
+
+# Arquivos de ambiente
+.env
+
+# Arquivos do editor (VSCode, por exemplo)
+.vscode/
+
+# Sistema operacional (geralmente não precisa ser enviado para o repositório)
+.DS_Store  # Para Mac
+Thumbs.db  # Para Windows
+
+# Arquivos de logs
+*.log
