@@ -1,0 +1,65 @@
+/* Estilo do container */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff; /* Fundo branco para o container */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra para destacar */
+}
+
+/* Estilo para os grupos de input */
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+/* Estilo para os inputs */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px; /* Ajuste de tamanho da fonte */
+  /* Removendo a cor personalizada para manter como estava */
+}
+
+/* Estilo para o botão */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px; /* Borda arredondada no botão */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Estilo para o texto (como o parágrafo) */
+p {
+  text-align: center;
+  color: #333; /* Cor do texto */
+}
+
+/* Estilo para os links */
+a {
+  color: #4caf50; /* Cor do link */
+  text-decoration: none; /* Remover sublinhado */
+}
+
+a:hover {
+  text-decoration: underline; /* Adicionar sublinhado ao passar o mouse */
+}
+
+/* Estilo do título */
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333; /* Cor do título */
+  text-align: center;
+}

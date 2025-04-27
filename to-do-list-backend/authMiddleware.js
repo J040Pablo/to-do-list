@@ -13,16 +13,18 @@ export const protect = async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+      // Busca o usuário e adiciona no objeto req
       req.user = await User.findById(decoded.id).select("-password");
 
-      next();
+      return next(); // Chama o próximo middleware
     } catch (error) {
       console.error(error);
-      res.status(401).json({ message: "Não autorizado, token inválido" });
+      return res
+        .status(401)
+        .json({ message: "Não autorizado, token inválido" });
     }
   }
 
-  if (!token) {
-    res.status(401).json({ message: "Não autorizado, sem token" });
-  }
+  // Caso não tenha um token válido
+  return res.status(401).json({ message: "Não autorizado, sem token" });
 };

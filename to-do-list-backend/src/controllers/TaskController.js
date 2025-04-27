@@ -1,61 +1,53 @@
 import Task from "../models/TaskModel.js";
 
-// Criar nova tarefa
+// Criar uma nova task
 export const createTask = async (req, res) => {
-  const { title, description } = req.body;
-
+  const { title } = req.body;
   const task = new Task({
-    user: req.user.id,
     title,
-    description,
+    user: req.user.id, // Associa a task ao usuário logado
   });
 
-  const createdTask = await task.save();
-  res.status(201).json(createdTask);
+  await task.save();
+  res.status(201).json(task);
 };
 
-// Listar todas tarefas do usuário
+// Buscar todas as tasks do usuário
 export const getTasks = async (req, res) => {
   const tasks = await Task.find({ user: req.user.id });
   res.json(tasks);
 };
 
-// Buscar uma tarefa específica
-export const getTaskById = async (req, res) => {
-  const task = await Task.findById(req.params.id);
-
-  if (task && task.user.toString() === req.user.id) {
-    res.json(task);
-  } else {
-    res.status(404).json({ message: "Tarefa não encontrada" });
-  }
-};
-
-// Atualizar uma tarefa
+// Editar uma task
 export const updateTask = async (req, res) => {
-  const { title, description } = req.body;
-
+  const { title } = req.body;
   const task = await Task.findById(req.params.id);
 
-  if (task && task.user.toString() === req.user.id) {
-    task.title = title || task.title;
-    task.description = description || task.description;
-
-    const updatedTask = await task.save();
-    res.json(updatedTask);
-  } else {
-    res.status(404).json({ message: "Tarefa não encontrada" });
+  if (task.user.toString() !== req.user.id) {
+    return res.status(401).json({ message: "Não autorizado" });
   }
+
+  task.title = title || task.title;
+  await task.save();
+  res.json(task);
 };
 
-// Deletar uma tarefa
+// Deletar uma task
 export const deleteTask = async (req, res) => {
-  const task = await Task.findById(req.params.id);
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
 
-  if (task && task.user.toString() === req.user.id) {
-    await task.remove();
-    res.json({ message: "Tarefa removida" });
-  } else {
-    res.status(404).json({ message: "Tarefa não encontrada" });
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+
+    await Task.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Task removed" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting task" });
   }
 };
